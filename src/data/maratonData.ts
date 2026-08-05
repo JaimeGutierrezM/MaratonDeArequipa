@@ -22,13 +22,14 @@ export interface RaceItem {
   title: string;
   date: string;
   fullDate: string;
+  isoDate: string; // ISO date for automatic sorting & filtering
   location: string;
   distances: string[];
   isFeatured?: boolean;
   image: string;
   url: string;
   organizer: string;
-  status: 'Confirmado' | 'Por confirmar';
+  status: 'Confirmado' | 'Por confirmar' | 'Finalizado';
 }
 
 export interface GroupItem {
@@ -188,121 +189,32 @@ export const MOCK_RESULTS: ResultItem[] = [
     estado: "Oficial",
     posGenero: 3,
     posCategoria: 2,
-  },
-  {
-    pos: 6,
-    dorsal: "1550",
-    nombre: "Gabriel Zúñiga Paredes",
-    distancia: "21K",
-    categoria: "40-49 M",
-    genero: "M",
-    tiempo: "01:31:05",
-    tiempoNeto: "01:31:00",
-    ritmo: "04:19",
-    carrera: "Media Maratón Cd. Arequipa 2025",
-    fecha: "18/05/2025",
-    ano: 2025,
-    equipo: "Trail Arequipa",
-    estado: "Oficial",
-    posGenero: 4,
-    posCategoria: 1,
-  },
-  {
-    pos: 7,
-    dorsal: "2340",
-    nombre: "Lucía Morales Beltrán",
-    distancia: "10K",
-    categoria: "18-29 F",
-    genero: "F",
-    tiempo: "00:42:10",
-    tiempoNeto: "00:42:05",
-    ritmo: "04:13",
-    carrera: "10K Ciudad de Arequipa 2025",
-    fecha: "18/05/2025",
-    ano: 2025,
-    equipo: "Misti Runners",
-    estado: "Oficial",
-    posGenero: 3,
-    posCategoria: 2,
-  },
-  {
-    pos: 8,
-    dorsal: "5012",
-    nombre: "Hernán Valdivia Cano",
-    distancia: "21K",
-    categoria: "50-59 M",
-    genero: "M",
-    tiempo: "01:38:50",
-    tiempoNeto: "01:38:42",
-    ritmo: "04:41",
-    carrera: "Media Maratón Cd. Arequipa 2025",
-    fecha: "18/05/2025",
-    ano: 2025,
-    equipo: "ADES Runners del Sur",
-    estado: "Oficial",
-    posGenero: 5,
-    posCategoria: 1,
   }
 ];
 
-export const FEATURED_RACE: RaceItem = {
-  id: "media-maraton-arequipa-2026",
-  title: "MEDIA MARATÓN CIUDAD DE AREQUIPA 2026",
-  date: "9 AGOSTO 2026",
-  fullDate: "Domingo 9 de agosto de 2026",
-  location: "Plaza de Yanahuara, Arequipa, Perú",
-  distances: ["21K", "10K", "5K"],
-  isFeatured: true,
-  image: "https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?q=80&w=1200&auto=format&fit=crop",
-  url: "/carreras/media-maraton-ciudad-de-arequipa-2026/",
-  organizer: "Event Sports Perú S.R.L.",
-  status: "Confirmado",
-};
-
-export const UPCOMING_RACES: RaceItem[] = [
+export const ALL_RACES_DATABASE: RaceItem[] = [
+  // Futuras Carreras (2026)
   {
     id: "media-maraton-arequipa-2026",
     title: "Media Maratón Ciudad de Arequipa",
     date: "09 AGO 2026",
-    fullDate: "09 de agosto de 2026",
-    location: "Plaza de Yanahuara",
+    fullDate: "Domingo 09 de agosto de 2026",
+    isoDate: "2026-08-09T06:00:00",
+    location: "Plaza de Yanahuara, Arequipa",
     distances: ["21K", "10K", "5K"],
     isFeatured: true,
-    image: "https://images.unsplash.com/photo-1530541930197-ff16ac917b0e?q=80&w=600&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?q=80&w=600&auto=format&fit=crop",
     url: "/carreras/media-maraton-ciudad-de-arequipa-2026/",
     organizer: "Event Sports Perú S.R.L.",
-    status: "Confirmado",
-  },
-  {
-    id: "corre-misti-trail-2026",
-    title: "Corre por el Misti Trail",
-    date: "14 JUN 2026",
-    fullDate: "14 de junio de 2026",
-    location: "Fundo El Rosal, Chiguata",
-    distances: ["15K", "25K"],
-    image: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=600&auto=format&fit=crop",
-    url: "/carreras/",
-    organizer: "Club Misti Trail",
-    status: "Confirmado",
-  },
-  {
-    id: "10k-ciudad-arequipa-2026",
-    title: "10K Ciudad de Arequipa",
-    date: "12 JUL 2026",
-    fullDate: "12 de julio de 2026",
-    location: "Cercado de Arequipa",
-    distances: ["10K", "5K"],
-    image: "https://images.unsplash.com/photo-1513593771513-7b58b6c4af38?q=80&w=600&auto=format&fit=crop",
-    url: "/carreras/",
-    organizer: "Asociación Fondistas AQP",
     status: "Confirmado",
   },
   {
     id: "carrera-amistad-2026",
     title: "Carrera de la Amistad",
     date: "30 AGO 2026",
-    fullDate: "30 de agosto de 2026",
-    location: "Valle de Chilina",
+    fullDate: "Domingo 30 de agosto de 2026",
+    isoDate: "2026-08-30T07:00:00",
+    location: "Valle de Chilina, Arequipa",
     distances: ["10K", "5K"],
     image: "https://images.unsplash.com/photo-1502904550040-7534597429ae?q=80&w=600&auto=format&fit=crop",
     url: "/carreras/",
@@ -310,12 +222,26 @@ export const UPCOMING_RACES: RaceItem[] = [
     status: "Confirmado",
   },
   {
+    id: "canopy-10k-2026",
+    title: "CANOPY 10K - IV Edición",
+    date: "13 SEP 2026",
+    fullDate: "Domingo 13 de septiembre de 2026",
+    isoDate: "2026-09-13T07:30:00",
+    location: "Fundo El Rosal, Cerro Colorado",
+    distances: ["10K", "5K"],
+    image: "https://images.unsplash.com/photo-1513593771513-7b58b6c4af38?q=80&w=600&auto=format&fit=crop",
+    url: "/carreras/",
+    organizer: "Club Canopy AQP",
+    status: "Confirmado",
+  },
+  {
     id: "media-maraton-yanahuara-2026",
     title: "Media Maratón Yanahuara",
     date: "20 SEP 2026",
-    fullDate: "20 de septiembre de 2026",
+    fullDate: "Domingo 20 de septiembre de 2026",
+    isoDate: "2026-09-20T07:00:00",
     location: "Yanahuara Mirador",
-    distances: ["21K", "10K", "5K"],
+    distances: ["21K", "10K"],
     image: "https://images.unsplash.com/photo-1486218119243-13883505764c?q=80&w=600&auto=format&fit=crop",
     url: "/carreras/",
     organizer: "Yanahuara Runners",
@@ -325,15 +251,64 @@ export const UPCOMING_RACES: RaceItem[] = [
     id: "maraton-aqp-2026",
     title: "Maratón AQP 42K",
     date: "08 NOV 2026",
-    fullDate: "08 de noviembre de 2026",
+    fullDate: "Domingo 08 de noviembre de 2026",
+    isoDate: "2026-11-08T06:00:00",
     location: "Plaza de Armas Arequipa",
-    distances: ["42K", "21K", "10K", "5K"],
-    image: "https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?q=80&w=600&auto=format&fit=crop",
+    distances: ["42K", "21K", "10K"],
+    image: "https://images.unsplash.com/photo-1530541930197-ff16ac917b0e?q=80&w=600&auto=format&fit=crop",
     url: "/carreras/",
     organizer: "Federación Peruana de Atletismo",
     status: "Por confirmar",
+  },
+
+  // Carreras Pasadas (Histórico)
+  {
+    id: "reto-volcanico-2026",
+    title: "Reto Volcánico - I Desafío Socabaya",
+    date: "26 ABR 2026",
+    fullDate: "Domingo 26 de abril de 2026",
+    isoDate: "2026-04-26T07:00:00",
+    location: "Parque Menelik, Socabaya",
+    distances: ["15K", "8K"],
+    image: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=600&auto=format&fit=crop",
+    url: "/resultados/",
+    organizer: "Socabaya Trail Club",
+    status: "Finalizado",
+  },
+  {
+    id: "media-maraton-arequipa-2025",
+    title: "Media Maratón Ciudad de Arequipa 2025",
+    date: "18 MAY 2025",
+    fullDate: "Domingo 18 de mayo de 2025",
+    isoDate: "2025-05-18T06:30:00",
+    location: "Plaza de Yanahuara",
+    distances: ["21K", "10K", "5K"],
+    image: "https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?q=80&w=600&auto=format&fit=crop",
+    url: "/resultados/",
+    organizer: "Event Sports Perú S.R.L.",
+    status: "Finalizado",
   }
 ];
+
+// Helper to filter races automatically by date
+export const getProcessedRaces = (currentIsoDate = new Date().toISOString()) => {
+  const upcoming = ALL_RACES_DATABASE.filter((r) => r.isoDate >= currentIsoDate).sort(
+    (a, b) => new Date(a.isoDate).getTime() - new Date(b.isoDate).getTime()
+  );
+
+  const past = ALL_RACES_DATABASE.filter((r) => r.isoDate < currentIsoDate).sort(
+    (a, b) => new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime()
+  );
+
+  // Auto-highlight the closest upcoming race
+  const featuredRace = upcoming.length > 0 ? upcoming[0] : ALL_RACES_DATABASE[0];
+
+  return { upcoming, past, featuredRace };
+};
+
+export const FEATURED_RACE = getProcessedRaces().featuredRace;
+export const UPCOMING_RACES = getProcessedRaces().upcoming;
+export const PAST_RACES = getProcessedRaces().past;
 
 export const RUNNING_GROUPS: GroupItem[] = [
   {
